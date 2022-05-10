@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "libqbe.h"
 
+// TODO: tests for _reducedvs32 and umagiccalc
+
 /*
  * This file contains utility functions for dealing with the MagicSets used
  * with __divu32_magic() and friends.
@@ -55,7 +57,7 @@ _reducedvs32(u32 dvs, u32 *dst_reduced, u32 *dst_k)
  * Precondition: 1 < d <= 2^32-1
  */
 struct MagicSet
-umagiccalc(u32 dvs)
+libqbe_umagiccalc(u32 dvs)
 {
 	struct MagicSet m = {0};
 
@@ -113,7 +115,7 @@ void
 generate_magics(u32 until, FILE *f)
 {
 	for (u32 i = 2; i < until; ++i) {
-		struct MagicSet m = umagiccalc(i);
+		struct MagicSet m = libqbe_umagiccalc(i);
 		fprintf(f, "%c", i % 2 == 1 ? ' ' : '\t');
 		fprintf(f, "[%2i] = { 0x%08x, %5s, %1u },",
 				i, m.m, m.a ? "true" : "false", m.s);
