@@ -22,3 +22,5 @@ clean:
 	rm -f test
 
 test: test.c
+	@printf "    %-8s%s\n" "CCLD" $@
+	$(CMD)$(CC) $< -o $@ $(CFLAGS)
