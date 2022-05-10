@@ -22,6 +22,10 @@ typedef unsigned int        u32;
 typedef unsigned short      u16;
 typedef          int        i32;
 
+struct S64 {
+	u32 hi; u32 lo;
+};
+
 /* Magic number set for use with __divu32_magic() and friends.
  *
  * Taken from:
@@ -43,8 +47,8 @@ struct MagicSet {
  * WIDTH: 16, 32, 64
  */
 
-void __add64u32(u32 a_hi, u32 a_lo, u32 b_hi, u32 b_lo, u32 *dst_hi, u32 *dst_lo);
-u32  __himulu32(u32 a, u32 b);
-u32  __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift);
+struct S64 __add64u32(u32 a_hi, u32 a_lo, u32 b_hi, u32 b_lo);
+u32 __himulu32(u32 a, u32 b);
+u32 __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift);
 
 #endif
