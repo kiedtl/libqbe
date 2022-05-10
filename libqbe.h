@@ -5,6 +5,9 @@
 #define NULL 0
 #endif
 
+#define false 0
+#define true  1
+
 #define ARRAY_LEN(a) (sizeof(a) / sizeof((a)[0]))
 
 #define HI16(x) ((x) >> 16)

@@ -11,5 +11,6 @@ typedef void (*TestFunc)(void);
 
 void eq_u32(char *file, int line, const char *func, u32 expected, u32 got);
 void eq_u64(char *file, int line, const char *func, u64 expected, u64 got);
+void truthy(char *file, int line, const char *func, bool boolean);
 
 #endif

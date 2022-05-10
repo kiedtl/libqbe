@@ -5,6 +5,7 @@
 
 #define TEST
 #include "add.c"
+#include "div_magic.c"
 #include "himul.c"
 #undef TEST
 
@@ -22,8 +23,9 @@ struct {
 	u32 count;
 } test_func_sets[] = {
 #define SET(name, fnset) { name, (TestFunc *)&fnset, ARRAY_LEN(fnset) }
-	SET("add.c",   add_test_funcs),
-	SET("himul.c", himul_test_funcs),
+	SET("add.c",       add_test_funcs),
+	SET("div_magic.c", div_magic_test_funcs),
+	SET("himul.c",     himul_test_funcs),
 #undef SET
 };
 
@@ -89,5 +91,17 @@ eq_u64(char *file, int line, const char *func, u64 expected, u64 got)
 		++failed_asserts;
 		fprintf(f_err, "FAIL: %s:%s:%d: Expected %llu, got %llu\n",
 				file, func, line, expected, got);
+	}
+}
+
+void
+truthy(char *file, int line, const char *func, bool boolean)
+{
+	++total_asserts;
+
+	if (!boolean) {
+		++failed_asserts;
+		fprintf(f_err, "FAIL: %s:%s:%d: Expression is false!\n",
+				file, func, line);
 	}
 }
