@@ -45,6 +45,6 @@ struct MagicSet {
 
 void __add64u32(u32 a_hi, u32 a_lo, u32 b_hi, u32 b_lo, u32 *dst_hi, u32 *dst_lo);
 u32  __himulu32(u32 a, u32 b);
-u32  __divmodu32(u32 dividend, u32 divisor, u32 *rem_dest);
+u32  __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift);
 
 #endif
