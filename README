@@ -1,19 +1,22 @@
 libqbe
 ------
 
-libqbe is a library aimed at qbe users and amateur compiler writers
-who crave luxuries like division on platforms which lack hardware support for
-those. It is analogous to libgcc or clang's compiler-rt in that sense.
+libqbe is a library aimed at qbe users and amateur compiler writers, who crave
+luxuries (like division) on platforms which lack hardware support for those. It
+is analogous to libgcc or clang's compiler-rt in that sense.
 
 It is not and does not intend to be a drop-in libgcc replacement.
+
 
 Provided Functions
 ------------------
 
-TODO
+* __add64u32
+* __himulu32
+* __divu32_magic
 
 
 Documentation
 -------------
 
-None yet.
+None yet. (Help welcome!)
