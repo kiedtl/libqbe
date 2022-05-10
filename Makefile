@@ -9,6 +9,8 @@ WARNING = -Wall -Wpedantic -Wextra -Wold-style-definition \
 CC      = cc
 CFLAGS  = -Og -ggdb $(WARNING)
 
+SRC     = add.c div_magic.c himul.c
+
 %.o: %.c
 	@printf "    %-8s%s\n" "CC" $@
 	$(CMD)$(CC) -c $< -o $@ $(CFLAGS)
@@ -21,6 +23,6 @@ check: test
 clean:
 	rm -f test
 
-test: test.c
+test: test.c $(SRC)
 	@printf "    %-8s%s\n" "CCLD" $@
 	$(CMD)$(CC) $< -o $@ $(CFLAGS)
