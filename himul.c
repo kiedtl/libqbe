@@ -2,6 +2,7 @@
 
 /*
  * Multiply a * b, returning the high word of the product without overflowing.
+ * Very similar to PowerPC's mulhwu instruction.
  *
  */
 u32
