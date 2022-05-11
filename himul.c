@@ -63,7 +63,25 @@ himul_test_misc(void)
 	TEST_END();
 }
 
+void
+himul_test_exhaustive(void)
+{
+	TEST_BEGIN();
+
+	u32 U32_MAX = 0xFFFFFFFF;
+	for (u32 a = U32_MAX; a > U32_MAX - 0xFFF; --a) {
+		for (u32 b = U32_MAX; b > U32_MAX - 0xFFF; --b) {
+			u32 expected = ((u64)a * (u64)b) >> 32;
+			u32 got = __himulu32(a, b);
+			test(eq_u64, expected, got);
+		}
+	}
+
+	TEST_END();
+}
+
 TestFunc himul_test_funcs[] = {
 	&himul_test_misc,
+	&himul_test_exhaustive,
 };
 #endif
