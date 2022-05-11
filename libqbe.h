@@ -49,6 +49,8 @@ struct MagicSet {
 
 struct S64 __add64u32(u32 a_hi, u32 a_lo, u32 b_hi, u32 b_lo);
 u32 __himulu32(u32 a, u32 b);
+u32 __divu32_10(u32 dvd);
+u32 __divu32_5(u32 dvd);
 u32 __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift);
 
 #endif
