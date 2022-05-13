@@ -9,8 +9,8 @@ typedef void (*TestFunc)(void);
 #define test(func, ...) \
 	(func(__FILE__, __LINE__, __func__, __VA_ARGS__))
 
-void eq_u32(char *file, int line, const char *func, u32 expected, u32 got);
-void eq_u64(char *file, int line, const char *func, u64 expected, u64 got);
-void truthy(char *file, int line, const char *func, bool boolean);
+bool eq_u32(char *file, int line, const char *func, u32 expected, u32 got);
+bool eq_u64(char *file, int line, const char *func, u64 expected, u64 got);
+bool truthy(char *file, int line, const char *func, bool boolean);
 
 #endif

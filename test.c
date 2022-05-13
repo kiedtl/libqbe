@@ -67,12 +67,14 @@ main(void)
 		putchar(c);
 	fclose(f_err);
 	remove(TMP_FILE);
+
+	return failed_tests == 0;
 }
 
 // -----------------------------------------------------------------------------
 
 
-void
+bool
 eq_u32(char *file, int line, const char *func, u32 expected, u32 got)
 {
 	++total_asserts;
@@ -81,10 +83,12 @@ eq_u32(char *file, int line, const char *func, u32 expected, u32 got)
 		++failed_asserts;
 		fprintf(f_err, "FAIL: %s:%s:%d: Expected %u, got %u\n",
 				file, func, line, expected, got);
+		return false;
 	}
+	return true;
 }
 
-void
+bool
 eq_u64(char *file, int line, const char *func, u64 expected, u64 got)
 {
 	++total_asserts;
@@ -93,10 +97,12 @@ eq_u64(char *file, int line, const char *func, u64 expected, u64 got)
 		++failed_asserts;
 		fprintf(f_err, "FAIL: %s:%s:%d: Expected %llu, got %llu\n",
 				file, func, line, expected, got);
+		return false;
 	}
+	return true;
 }
 
-void
+bool
 truthy(char *file, int line, const char *func, bool boolean)
 {
 	++total_asserts;
@@ -105,5 +111,7 @@ truthy(char *file, int line, const char *func, bool boolean)
 		++failed_asserts;
 		fprintf(f_err, "FAIL: %s:%s:%d: Expression is false!\n",
 				file, func, line);
+		return false;
 	}
+	return true;
 }

@@ -1,6 +1,40 @@
 #include "libqbe.h"
 #include <stdio.h>
 
+u32
+__divmodu32(u32 dvd, u32 dvs, u32 *rem_dest)
+{
+	if (dvd == 0)       return 0;
+	if (dvs  == 1)      return dvd;
+	if (dvd == dvs)     return 1;
+	if (dvd == dvs + 1) return 1;
+	if (dvd < dvs)      return 0;
+
+	u32 bit = 1;
+	while (dvs < dvd && bit && (dvs & (1 << 31)) == 0) {
+		dvs <<= 1;
+		bit <<= 1;
+	}
+
+	u32 rem = dvd;
+	u32 res = 0;
+
+	while (bit != 0) {
+		if (rem >= dvs) {
+			rem -= dvs;
+			res |= bit;
+		}
+
+		bit >>= 1;
+		dvs >>= 1;
+	}
+
+	if (rem_dest != NULL)
+		*rem_dest = rem;
+	return res;
+}
+
+
 /* Taken from this SO answer:
  *
  * https://stackoverflow.com/a/19076173
@@ -53,7 +87,8 @@ div_10_test_exhaustive(void)
 {
 	TEST_BEGIN();
 	for (u32 dvd = 0; dvd < 0xFFFFF; ++dvd) {
-		test(eq_u32, dvd / 10, __divu32_10(dvd));
+		if (!test(eq_u32, dvd /  10, __divu32_10(dvd)))
+			break;
 	}
 	TEST_END();
 }
@@ -63,7 +98,21 @@ div_5_test_exhaustive(void)
 {
 	TEST_BEGIN();
 	for (u32 dvd = 0; dvd < 0xFFFFF; ++dvd) {
-		test(eq_u32, dvd /  5, __divu32_5(dvd));
+		if (!test(eq_u32, dvd /  5, __divu32_5(dvd)))
+			break;
+	}
+	TEST_END();
+}
+
+void
+divmod_test_exhaustive(void)
+{
+	TEST_BEGIN();
+	for (u32 dvd = 0xFFF; dvd > 0; --dvd) {
+		for (u32 dvs = 1; dvs < 0xFFF; ++dvs) {
+			if (!test(eq_u32, dvd /  dvs, __divmodu32(dvd, dvs, NULL)))
+				break;
+		}
 	}
 	TEST_END();
 }
@@ -71,5 +120,6 @@ div_5_test_exhaustive(void)
 TestFunc div_test_funcs[] = {
 	&div_10_test_exhaustive,
 	&div_5_test_exhaustive,
+	&divmod_test_exhaustive,
 };
 #endif /* }}} */
