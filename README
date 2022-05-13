@@ -12,11 +12,22 @@ Provided Functions
 ------------------
 
 * __add64u32
-* __himulu32
+* __divmodu32
+* __div32_10
+* __div32_5
 * __divu32_magic
+* __himulu32
 
 
 Documentation
 -------------
 
 None yet. (Help welcome!)
+
+
+Todo
+----
+
+- Rename to libqbe-rt to avoid possible naming conflict with a library version
+  of QBE.
+- Consider having ABI compatibility with libgcc/compiler-rt.
