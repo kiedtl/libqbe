@@ -6,7 +6,6 @@
 #define TEST
 #include "add.c"
 #include "div.c"
-#include "div_magic.c"
 #include "himul.c"
 #undef TEST
 
@@ -26,7 +25,6 @@ struct {
 #define SET(name, fnset) { name, (TestFunc *)&fnset, ARRAY_LEN(fnset) }
 	SET("add.c",       add_test_funcs),
 	SET("div.c",       div_test_funcs),
-	SET("div_magic.c", div_magic_test_funcs),
 	SET("himul.c",     himul_test_funcs),
 #undef SET
 };
@@ -51,6 +49,7 @@ main(void)
 			} else {
 				printf(".");
 			}
+			fflush(stdout);
 		}
 
 		printf("\n");
@@ -68,7 +67,7 @@ main(void)
 	fclose(f_err);
 	remove(TMP_FILE);
 
-	return failed_tests == 0;
+	return !(failed_tests == 0);
 }
 
 // -----------------------------------------------------------------------------
