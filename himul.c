@@ -5,11 +5,12 @@
  * Very similar to PowerPC's mulhwu instruction.
  *
  */
+
 u32
 __himulu32(u32 a, u32 b)
 {
-	u32 a_hi = HI16(a), a_lo = LO16(a);
-	u32 b_hi = HI16(b), b_lo = LO16(b);
+	u16 a_hi = HI16(a), a_lo = LO16(a);
+	u16 b_hi = HI16(b), b_lo = LO16(b);
 
 	/*
 	 * u64 res = a_lo * b_lo
@@ -27,6 +28,8 @@ __himulu32(u32 a, u32 b)
 	 * Add each 16-bit chunk one at a time to avoid overflow.
 	 *
 	 * u32 res = (((((i4 >> 16) + i3) + i2) >> 16) + i1);
+	 *                               ^^^^^
+	 *                           possible overflow
 	 *
 	 */
 
@@ -53,6 +56,7 @@ himul_test_misc(void)
 		{   18481382,    1925527 },
 		{   19435827, 3290874132 },
 		{ 0xFFFFFFFF, 0xFFFFFFFF },
+		{ 0xe3a4f8ae, 0x3812a83e },
 	};
 
 	for (u32 i = 0; i < ARRAY_LEN(cases); ++i) {
