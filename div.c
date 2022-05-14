@@ -1,5 +1,4 @@
 #include "libqbe.h"
-#include <stdio.h>
 
 /*
  * Division method using only shifts, adds, and one multiply via himul.
