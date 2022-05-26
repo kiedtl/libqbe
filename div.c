@@ -66,11 +66,13 @@ __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift)
 u32
 __divmodu32(u32 dvd, u32 dvs, u32 *rem_dest)
 {
-	if (dvd == 0)       return 0;
-	if (dvs  == 1)      return dvd;
-	if (dvd == dvs)     return 1;
-	if (dvd == dvs + 1) return 1;
-	if (dvd < dvs)      return 0;
+	/* Disabled, need to populate rem_dest! */
+
+	/* if (dvd == 0)       return 0; */
+	/* if (dvs  == 1)      return dvd; */
+	/* if (dvd == dvs)     return 1; */
+	/* if (dvd == dvs + 1) return 1; */
+	/* if (dvd < dvs)      return 0; */
 
 	u32 bit = 1;
 	while (dvs < dvd && bit && (dvs & (1 << 31)) == 0) {
@@ -182,7 +184,9 @@ divmod_test_exhaustive(void)
 	TEST_BEGIN();
 	for (u32 dvd = 0xFFF; dvd > 0; --dvd) {
 		for (u32 dvs = 1; dvs < 0xFFF; ++dvs) {
-			if (!test(eq_u32, dvd /  dvs, __divmodu32(dvd, dvs, NULL)))
+			u32 rem = 0;
+			if (!test(eq_u32, dvd / dvs, __divmodu32(dvd, dvs, &rem))
+			||  !test(eq_u32, dvd % dvs, rem))
 				goto End;
 		}
 	}
