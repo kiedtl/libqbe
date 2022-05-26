@@ -63,7 +63,6 @@ __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift)
 		      : (((dvd - q) >> 1) + q) >> (shift - 1);
 }
 
-
 u32
 __divmodu32(u32 dvd, u32 dvs, u32 *rem_dest)
 {
@@ -96,6 +95,16 @@ __divmodu32(u32 dvd, u32 dvs, u32 *rem_dest)
 		*rem_dest = rem;
 	return res;
 }
+
+
+u32
+__modu32(u32 dvd, u32 dvs)
+{
+	u32 dest = -1;
+	(void)__divmodu32(dvd, dvs, &dest);
+	return dest;
+}
+
 
 
 /* Taken from this SO answer:

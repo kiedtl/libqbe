@@ -52,5 +52,7 @@ u32 __himulu32(u32 a, u32 b);
 u32 __divu32_10(u32 dvd);
 u32 __divu32_5(u32 dvd);
 u32 __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift);
+u32 __divmodu32(u32 dvd, u32 dvs, u32 *rem_dest);
+u32 __modu32(u32 dvd, u32 dvs);
 
 #endif
