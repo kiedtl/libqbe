@@ -49,6 +49,7 @@ struct MagicSet umagics[UMAGICS_LEN] = {
 #endif
 // }}}
 
+#ifndef LIBQBE_NO_DIVU32_MAGIC
 u32
 __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift)
 {
@@ -62,6 +63,7 @@ __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift)
 	return a == 0 ? q >> shift
 		      : (((dvd - q) >> 1) + q) >> (shift - 1);
 }
+#endif
 
 u32
 __divmodu32(u32 dvd, u32 dvs, u32 *rem_dest)
