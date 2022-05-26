@@ -2,7 +2,7 @@
 	.globl __mulu32
 	.type  __mulu32, @function
 __mulu32:
-	link    fp, #-0
+	link    fp, #0
 
 	move.w   8(fp), d0     ; d0  = a0
 	mulu.w  14(fp), d0     ; d0 *= b1
