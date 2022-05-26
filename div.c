@@ -66,7 +66,7 @@ __divu32_magic(u32 dvd, u32 dvs, u32 magic, bool a, u8 shift)
 #endif
 
 u32
-__divmodu32(u32 dvd, u32 dvs, u32 *rem_dest)
+__divmodu32(u32 dvd, u32 dvs, bool wantq)
 {
 	/* Disabled, need to populate rem_dest! */
 
@@ -95,20 +95,8 @@ __divmodu32(u32 dvd, u32 dvs, u32 *rem_dest)
 		dvs >>= 1;
 	}
 
-	if (rem_dest != NULL)
-		*rem_dest = rem;
-	return res;
+	return wantq ? res : rem;
 }
-
-
-u32
-__modu32(u32 dvd, u32 dvs)
-{
-	u32 dest = -1;
-	(void)__divmodu32(dvd, dvs, &dest);
-	return dest;
-}
-
 
 
 /* Taken from this SO answer:
@@ -186,9 +174,8 @@ divmod_test_exhaustive(void)
 	TEST_BEGIN();
 	for (u32 dvd = 0xFFF; dvd > 0; --dvd) {
 		for (u32 dvs = 1; dvs < 0xFFF; ++dvs) {
-			u32 rem = 0;
-			if (!test(eq_u32, dvd / dvs, __divmodu32(dvd, dvs, &rem))
-			||  !test(eq_u32, dvd % dvs, rem))
+			if (!test(eq_u32, dvd / dvs, __divmodu32(dvd, dvs, true))
+			||  !test(eq_u32, dvd % dvs, __divmodu32(dvd, dvs, false)))
 				goto End;
 		}
 	}
